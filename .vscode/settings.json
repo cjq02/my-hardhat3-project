@@ -1,0 +1,17 @@
+{
+  // 保存时自动格式化
+  "editor.formatOnSave": true,
+  
+  // 针对 Solidity 文件的格式化配置
+  "[solidity]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "JuanBlanco.solidity"
+  },
+  
+  // 如果使用 Prettier，可以这样配置：
+  // "[solidity]": {
+  //   "editor.formatOnSave": true,
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // }
+}
+
