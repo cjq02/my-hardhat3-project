@@ -1,0 +1,42 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-7305f40c839f51de91699f8dfadbb4ac26ba4e86",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/TokenVault.sol": "project/contracts/TokenVault.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/Token.sol": {
+        "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.24;\n\ncontract Token {\n    mapping(address => uint256) public balanceOf;\n\n    constructor() {\n        // 给部署者分配 10000 个代币\n        balanceOf[msg.sender] = 10000;\n    }\n\n    function transfer(address to, uint256 amount) public {\n        require(balanceOf[msg.sender] >= amount, \"Insufficient balance\");\n        balanceOf[msg.sender] -= amount;\n        balanceOf[to] += amount;\n    }\n}\n"
+      },
+      "project/contracts/TokenVault.sol": {
+        "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.24;\n\nimport \"./Token.sol\";\n\ncontract TokenVault {\n    Token public token;\n    mapping(address => uint256) public deposits;\n\n    constructor(address _token) {\n        token = Token(_token);\n    }\n\n    function deposit(uint256 amount) public {\n        require(\n            token.balanceOf(msg.sender) >= amount,\n            \"Insufficient token balance\"\n        );\n        token.transfer(address(this), amount);\n        deposits[msg.sender] += amount;\n    }\n}\n"
+      }
+    }
+  }
+}
